@@ -1,3 +1,21 @@
+server:
+  port: 8081
 spring:
   application:
     name: planeja-api
+  datasource: #configuração com banco de dados persistente. nao é memoria
+    url: jdbc:h2:file:./data/planeja-db
+    driver-class-name: org.h2.Driver
+    username: sa
+    password: sa
+  jpa:
+    hibernate:
+      ddl-auto: update #sempre atualiza a tabela no banco de dados
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
