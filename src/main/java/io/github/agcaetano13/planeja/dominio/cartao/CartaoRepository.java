@@ -11,6 +11,9 @@ import java.util.UUID;
 
 public interface CartaoRepository extends JpaRepository<CartaoEntity, UUID> {
 
+    boolean existsByNomeIgnoreCase(String nome);
+    boolean existsByNomeIgnoreCaseAndIdNot(String nome, UUID id);
+
     Optional<CartaoEntity> findByNome(String nome);
 
     @Query("""

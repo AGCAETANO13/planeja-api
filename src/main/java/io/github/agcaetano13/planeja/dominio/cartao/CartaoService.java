@@ -7,6 +7,8 @@ import io.github.agcaetano13.planeja.dominio.cartao.dto.CartaoForm;
 import io.github.agcaetano13.planeja.dominio.cartao.mapper.CartaoMapper;
 import io.github.agcaetano13.planeja.dominio.cartao.model.CartaoEntity;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;  // ← ADICIONADO
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -39,7 +41,6 @@ public class CartaoService {
                 .findById(id)
                 .map(mapper::toDetalhes)
                 .orElseThrow(() -> new RegistroNaoEncontradoException());
-
     }
 
     @Transactional
@@ -54,8 +55,12 @@ public class CartaoService {
         }
 
         mapper.update(entity, dadosAtualizacao);
-
         repository.save(entity);
+    }
 
+    public Page<CartaoDetalhes> listar(PageRequest pageRequest) {
+        return repository
+                .findAll(pageRequest)
+                .map(mapper::toDetalhes);
     }
 }

@@ -17,7 +17,7 @@ public class CartaoEntity {
     @Column
     private UUID id;
 
-    @Column(name = "nome", nullable = false, length = 30)
+    @Column(name = "nome", nullable = false, length = 30, unique = true)
     private String nome;
 
     @Column(name = "bandeira")

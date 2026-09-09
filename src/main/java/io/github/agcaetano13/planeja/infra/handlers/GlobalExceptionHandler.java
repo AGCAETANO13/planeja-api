@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import java.time.LocalDateTime;
 import java.util.Map;
 
-@RestControllerAdvice // spring registra como serviço global de exeção
+@RestControllerAdvice
 public class GlobalExceptionHandler {
 
     @ExceptionHandler(ValidationException.class)
@@ -22,7 +22,7 @@ public class GlobalExceptionHandler {
                 "timestamp", LocalDateTime.now(),
                 "status", status.value(),
                 "error", e.getMessage(),
-                "camposinvalidos", e.getCamposInvalidos()
+                "camposInvalidos", e.getCamposInvalidos()  // ← MUDANÇA: camposInvalidos (camelCase)
 
         );
 
@@ -34,7 +34,7 @@ public class GlobalExceptionHandler {
 
         var camposInvalidos = e.getFieldErrors()
                 .stream()
-                .map(fe -> new CampoInvalido(fe.getField(), fe.getDefaultMessage() ))
+                .map(fe -> new CampoInvalido(fe.getField(), fe.getDefaultMessage()))
                 .toList();
 
         var status = HttpStatus.UNPROCESSABLE_ENTITY;
@@ -43,7 +43,7 @@ public class GlobalExceptionHandler {
                 "timestamp", LocalDateTime.now(),
                 "status", status.value(),
                 "error", e.getMessage(),
-                "camposinvalidos", camposInvalidos
+                "camposInvalidos", camposInvalidos  // ← MUDANÇA: camposInvalidos (camelCase)
 
         );
 
